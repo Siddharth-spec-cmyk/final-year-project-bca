@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Trend Prediction</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        background: #0f0f0f;
+        color: #0ff;
+        font-family: "Orbitron", sans-serif;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        text-shadow: 0 0 10px #0ff;
+      }
+
+      .container {
+        max-width: 1200px;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px #0ff;
+        animation: slideIn 1s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .form-control {
+        background: #222;
+        border: 1px solid #0ff;
+        color: #0ff;
+      }
+
+      .btn-primary {
+        background: #0ff;
+        border: none;
+        color: #000;
+        font-weight: bold;
+        text-transform: uppercase;
+        box-shadow: 0 0 10px #0ff;
+        transition: 0.3s ease-in-out;
+      }
+
+      .btn-primary:hover {
+        background: #00bcd4;
+        box-shadow: 0 0 20px #00bcd4;
+      }
+
+      .chart-container {
+        margin-top: 30px;
+        background: #111;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #0ff;
+      }
+
+      .table-responsive {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Stock Trend Prediction</h1>
+      <form method="POST">
+        <div class="mb-3">
+          <label for="stock" class="form-label">Enter Stock Ticker:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="stock"
+            name="stock"
+            value=""
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      {% if plot_path_ema_20_50 %}
+      <div class="chart-container">
+        <h3>Closing Price vs Time (20 & 50 Days EMA)</h3>
+        <img
+          src="{{ url_for('static', filename='ema_20_50.png') }}"
+          class="img-fluid"
+          alt="EMA 20 & 50"
+        />
+      </div>
+      {% endif %} {% if plot_path_ema_100_200 %}
+      <div class="chart-container">
+        <h3>Closing Price vs Time (100 & 200 Days EMA)</h3>
+        <img
+          src="{{ url_for('static', filename='ema_100_200.png') }}"
+          class="img-fluid"
+          alt="EMA 100 & 200"
+        />
+      </div>
+      {% endif %} {% if plot_path_prediction %}
+      <div class="chart-container">
+        <h3>Prediction vs Original Trend</h3>
+        <img
+          src="{{ url_for('static', filename='stock_prediction.png') }}"
+          class="img-fluid"
+          alt="Prediction vs Original"
+        />
+      </div>
+      {% endif %} {% if data_desc %}
+      <div class="table-responsive">
+        <h3 class="mt-4">Descriptive Data from Jan 2000 to Nov 2024</h3>
+        {{ data_desc | safe }}
+      </div>
+      {% endif %} {% if dataset_link %}
+      <div class="mt-4">
+        <a
+          href="{{ url_for('download_file', filename=dataset_link.split('/')[-1]) }}"
+          class="btn btn-success"
+          download
+          >Download Dataset (CSV)</a
+        >
+      </div>
+      {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
