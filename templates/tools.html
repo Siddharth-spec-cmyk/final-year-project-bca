@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Trend Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e0e0e0;
+            font-family: "Orbitron", sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-y: auto;
+            animation: bgAnimation 15s ease infinite alternate;
+        }
+
+        @keyframes bgAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px #00adb5;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: #00adb5;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 15px;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #00ffe0;
+        }
+
+        .container {
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #00adb5;
+            animation: fadeIn 1s ease-out;
+            margin-top: 80px;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-control {
+            background: #222;
+            border: 1px solid #00adb5;
+            color: #00adb5;
+        }
+
+        .btn-primary {
+            background: #00adb5;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px #00adb5;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #00ffe0;
+            box-shadow: 0 0 25px #00ffe0;
+        }
+
+        .chart-container {
+            background: #111;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00adb5;
+            margin-top: 30px;
+        }
+
+        .chart-container img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00adb5;
+        }
+
+        .chart-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .chart-half {
+            flex: 1;
+        }
+
+        .table-responsive {
+            background: #111;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00adb5;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .btn-success {
+            background: #00ffe0;
+            color: #000;
+            box-shadow: 0 0 15px #00ffe0;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-success:hover {
+            background: #00adb5;
+            box-shadow: 0 0 25px #00adb5;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="#">About</a>
+        <a href="/tool">Use the Tool</a>
+    </nav>
+
+    <div class="container">
+        <h1>Stock Trend Prediction</h1>
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <label for="stock" class="form-label">Stock Ticker:</label>
+                    <input type="text" class="form-control" id="stock" name="stock" value="" />
+                </div>
+                <div class="col-md-4 align-self-end mb-3">
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="start_date" class="form-label">Start Date:</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="end_date" class="form-label">End Date:</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" />
+                </div>
+            </div>
+        </form>
+
+        {% if plot_path_ema_20_50 or plot_path_ema_100_200 %}
+        <div class="chart-row">
+            {% if plot_path_ema_20_50 %}
+            <div class="chart-container chart-half">
+                <h4>Closing Price vs Time (20 & 50 Days EMA)</h4>
+                <img src="{{ url_for('static', filename='ema_20_50.png') }}" class="img-fluid" alt="EMA 20 & 50" />
+            </div>
+            {% endif %}
+
+            {% if plot_path_ema_100_200 %}
+            <div class="chart-container chart-half">
+                <h4>Closing Price vs Time (100 & 200 Days EMA)</h4>
+                <img src="{{ url_for('static', filename='ema_100_200.png') }}" class="img-fluid" alt="EMA 100 & 200" />
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if plot_path_prediction %}
+        <div class="chart-container">
+            <h3>Prediction vs Original Trend</h3>
+            <img src="{{ url_for('static', filename='stock_prediction.png') }}" class="img-fluid"
+                alt="Prediction vs Original" />
+        </div>
+        {% endif %}
+
+        {% if data_desc %}
+        <div class="table-responsive">
+            <h3 class="mt-4">Descriptive Data from Jan 2000 to Nov 2024</h3>
+            {{ data_desc | safe }}
+        </div>
+        {% endif %}
+
+        {% if dataset_link %}
+        <div class="mt-4">
+            <a href="{{ url_for('download_file', filename=dataset_link.split('/')[-1]) }}" class="btn btn-success"
+                download>Download Dataset (CSV)</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
