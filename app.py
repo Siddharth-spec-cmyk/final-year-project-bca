@@ -19,8 +19,12 @@ model = load_model('stock_dl_model.h5')
 
 API_KEY = "Z0L1887QSPBDDX2V"
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    return render_template("index.html")
+
+@app.route('/tool', methods=['GET', 'POST'])
+def tools():
     if request.method == 'POST':
         stock = request.form.get('stock', 'AAPL').upper().strip()  
         try:
@@ -38,10 +42,10 @@ def index():
             df = df.sort_index(ascending=True)  
 
         except Exception as e:
-            return render_template('index.html', error=f"Error fetching data: {e}")
+            return render_template('tools.html', error=f"Error fetching data: {e}")
 
         if 'Close' not in df:
-            return render_template('index.html', error="No 'Close' price data available.")
+            return render_template('tools.html', error="No 'Close' price data available.")
 
         df['EMA20'] = df['Close'].ewm(span=20, adjust=False).mean()
         df['EMA50'] = df['Close'].ewm(span=50, adjust=False).mean()
@@ -112,13 +116,13 @@ def index():
         dataset_link = f"static/{stock}_dataset.csv"
         df.to_csv(dataset_link)
 
-        return render_template('index.html',
+        return render_template('tools.html',
                                plot_path_ema_20_50=ema_chart_path,
                                plot_path_ema_100_200=ema_chart_path_100_200,
                                plot_path_prediction=prediction_chart_path,
                                dataset_link=dataset_link)
 
-    return render_template('index.html')
+    return render_template('tools.html')
 
 @app.route('/download/<filename>')
 def download_file(filename):
