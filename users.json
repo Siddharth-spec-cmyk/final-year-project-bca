@@ -2,8 +2,8 @@
     "joey": {
         "password": "scrypt:32768:8:1$klM7GdrVPv02VNvm$7f7381a2cb61fdd8c2aad77a930a26a3ea4245a1f697afe4619435f3ccbb28b177e417277d5fc3db2a8e07437fe41b3d161b4e091b14a391cc25784a6e896896",
         "stocks": [
-            "AAPL",
-            "GOOGL"
+            "GOOGL",
+            "AAPL"
         ]
     },
     "joe": {
