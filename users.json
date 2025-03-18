@@ -1,0 +1,15 @@
+{
+    "joey": {
+        "password": "scrypt:32768:8:1$klM7GdrVPv02VNvm$7f7381a2cb61fdd8c2aad77a930a26a3ea4245a1f697afe4619435f3ccbb28b177e417277d5fc3db2a8e07437fe41b3d161b4e091b14a391cc25784a6e896896",
+        "stocks": [
+            "AAPL",
+            "GOOGL"
+        ]
+    },
+    "joe": {
+        "password": "scrypt:32768:8:1$G6hDWD3sYH9mOCqb$04a8a99b423c19a4777ed4ca0660a8f403b212ca17d33306a2d9024fa2973b2678298c255e5d97ae8ecab13171b14a14919195ae6ae633b7e6f3cd278ad0b7fd",
+        "stocks": [
+            "GOOGL"
+        ]
+    }
+}
