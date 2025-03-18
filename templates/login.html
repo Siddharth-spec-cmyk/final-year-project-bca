@@ -169,9 +169,13 @@
 
 <body>
     <nav class="navbar">
-        <a href="#">Home</a>
-        <a href="/login">Login / Register</a>
+        <a href="/">Home</a>
+        {% if 'user' in session %}
+        <a href="/logout">Logout</a>
         <a href="/tool">Use the Tool</a>
+        {% else %}
+        <a href="/login">Login / Register</a>
+        {% endif %}
     </nav>
     <div class="animated-bg"></div>
 
@@ -184,6 +188,9 @@
         <div class="right-content">
             <form class="login-form" method="POST">
                 <h2 class="text-center mb-4">Login</h2>
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" id="username" name="username" class="form-control" required />
@@ -193,6 +200,9 @@
                     <input type="password" id="password" name="password" class="form-control" required />
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
+                <div class="text-center mt-3">
+                    <a href="/auth/register" class="text-info">Create an account</a>
+                </div>
             </form>
         </div>
     </div>
@@ -200,7 +210,7 @@
     <script>
         const texts = [
             "Stock Prediction tool...",
-            "Predit the trend with accuracy..",
+            "Predict the trend with accuracy...",
             "Your Gateway to Stock Insights...",
         ];
         let index = 0;

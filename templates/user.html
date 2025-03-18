@@ -44,27 +44,6 @@
             text-shadow: 0 0 10px #79c0ff;
         }
 
-        .animated-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
-            animation: bgPulse 12s infinite alternate;
-        }
-
-        @keyframes bgPulse {
-            0% {
-                background-position: 0% 0%;
-            }
-
-            100% {
-                background-position: 100% 100%;
-            }
-        }
-
         .content-wrapper {
             display: flex;
             flex-direction: column;
@@ -106,7 +85,6 @@
             box-shadow: 0 0 20px #79c0ff;
         }
 
-        .animated-lines::before,
         .animated-lines::after {
             content: "";
             position: absolute;
@@ -115,13 +93,6 @@
             background: #58a6ff;
             box-shadow: 0 0 15px #58a6ff;
             animation: lineMove 8s linear infinite;
-        }
-
-        .animated-lines::before {
-            top: 15%;
-        }
-
-        .animated-lines::after {
             bottom: 15%;
         }
 
@@ -134,25 +105,84 @@
                 transform: translateX(100%);
             }
         }
+
+        .user-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #58a6ff;
+            color: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 10px #58a6ff;
+            text-transform: uppercase;
+        }
+
+        .user-icon {
+            text-decoration: none;
+            margin-left: auto;
+        }
+
+        .login-text {
+            color: #58a6ff;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        .login-text:hover {
+            color: #79c0ff;
+            text-shadow: 0 0 10px #79c0ff;
+        }
+
+        .logout-btn {
+            background: #58a6ff;
+            color: #0d1117 !important;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 15px #58a6ff;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #79c0ff;
+            box-shadow: 0 0 25px #79c0ff;
+            color: #010409 !important;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
-        <a href="#">Home</a>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/tool">Use the Tool</a>
+        <a href="/">Home</a>
+
+        {% if session['user'] %}
+        <div style="display: flex; gap: 20px;">
+            <a href="{{ url_for('auth_app.profile') }}" class="user-icon">
+                <div class="user-img">{{ session['user'][0].upper() }}</div>
+            </a>
+            <a href="{{ url_for('auth_app.logout') }}" class="logout-btn">Logout</a>
+        </div>
+        {% else %}
+        <a href="{{ url_for('auth_app.login') }}" class="login-text">Login</a>
+        {% endif %}
     </nav>
-    <div class="animated-bg"></div>
+
+
     <div class="animated-lines"></div>
 
     <div class="content-wrapper">
-        <div class="user-info">Welcome, [Username]</div>
+        <div class="user-info">Welcome, {{ username }}</div>
         <div class="stock-container">
-            <div class="stock-card" onclick="location.href='/stock/AAPL'">Apple (AAPL)</div>
-            <div class="stock-card" onclick="location.href='/stock/TSLA'">Tesla (TSLA)</div>
-            <div class="stock-card" onclick="location.href='/stock/GOOGL'">Google (GOOGL)</div>
-            <div class="stock-card" onclick="location.href='/stock/AMZN'">Amazon (AMZN)</div>
+            {% for stock in stocks %}
+            <div class="stock-card" onclick="location.href=''">
+                {{ stock }}
+            </div>
+            {% endfor %}
         </div>
     </div>
 </body>

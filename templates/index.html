@@ -145,15 +145,60 @@
         box-shadow: 0 0 30px #79c0ff;
       }
     }
+
+    .user-img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #58a6ff;
+      color: #0d1117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 0 10px #58a6ff;
+      text-transform: uppercase;
+    }
+
+    .user-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #58a6ff;
+      color: #0d1117 !important;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px #58a6ff;
+      text-align: center;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+
+    .login-text {
+      color: #58a6ff;
+      font-weight: bold;
+      text-decoration: none;
+    }
   </style>
 </head>
 
 <body>
   <nav class="navbar">
-    <a href="#">Home</a>
-    <a href="/login">Login / Register</a>
-    <a href="/tool">Use the Tool</a>
+    <a href="/">Home</a>
+    {% if session['user'] %}
+    <a href="{{ url_for('auth_app.profile') }}" class="user-icon">
+      {{ session['user'][0] }}
+    </a>
+    {% else %}
+    <a href="{{ url_for('auth_app.login') }}" class="login-text">Login</a>
+    {% endif %}
   </nav>
+
+
 
   <div class="main-content">
     <h1>Stock Trend Prediction</h1>
