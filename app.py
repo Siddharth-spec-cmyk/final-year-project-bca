@@ -23,6 +23,10 @@ API_KEY = "Z0L1887QSPBDDX2V"
 def index():
     return render_template("index.html")
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
 @app.route('/tool', methods=['GET', 'POST'])
 def tools():
     if request.method == 'POST':

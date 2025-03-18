@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <style>
     body {
-      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-      color: #e0e0e0;
+      background: #0d1117;
+      color: #58a6ff;
       font-family: "Orbitron", sans-serif;
       height: 100vh;
       margin: 0;
@@ -18,44 +18,45 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      animation: bgAnimation 15s ease infinite alternate;
+      animation: glowBackground 10s linear infinite alternate;
     }
 
-    @keyframes bgAnimation {
+    @keyframes glowBackground {
       0% {
-        background-position: 0% 50%;
+        background: radial-gradient(circle, #0d1117 0%, #161b22 100%);
       }
 
       100% {
-        background-position: 100% 50%;
+        background: radial-gradient(circle, #161b22 0%, #0d1117 100%);
       }
     }
 
     .navbar {
-      background: rgba(0, 0, 0, 0.8);
-      box-shadow: 0 0 20px #00adb5;
+      background: rgba(3, 13, 23, 0.95);
+      box-shadow: 0 0 15px #58a6ff;
       width: 100%;
       position: fixed;
       top: 0;
-      padding: 10px 0;
+      padding: 15px 0;
     }
 
     .navbar a {
-      color: #00adb5;
+      color: #58a6ff;
       text-decoration: none;
       font-weight: bold;
-      margin: 0 15px;
-      transition: 0.3s;
+      margin: 0 20px;
+      transition: 0.3s ease-in-out;
     }
 
     .navbar a:hover {
-      color: #00ffe0;
+      color: #79c0ff;
+      text-shadow: 0 0 10px #79c0ff;
     }
 
     .main-content {
       text-align: center;
-      margin-top: 100px;
-      animation: fadeIn 1s ease-out;
+      margin-top: 120px;
+      animation: fadeIn 1.5s ease-out;
     }
 
     @keyframes fadeIn {
@@ -72,23 +73,77 @@
 
     h1 {
       font-size: 4rem;
-      text-shadow: 0 0 20px #00adb5;
-      margin-bottom: 30px;
+      text-shadow: 0 0 30px #58a6ff;
+      animation: pulse 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        text-shadow: 0 0 15px #58a6ff;
+      }
+
+      to {
+        text-shadow: 0 0 40px #58a6ff;
+      }
     }
 
     .btn-primary {
-      background: #00adb5;
+      background: #58a6ff;
       border: none;
-      color: #000;
+      color: #0d1117;
       font-weight: bold;
       text-transform: uppercase;
-      box-shadow: 0 0 15px #00adb5;
+      box-shadow: 0 0 20px #58a6ff;
       transition: 0.3s;
     }
 
     .btn-primary:hover {
-      background: #00ffe0;
-      box-shadow: 0 0 25px #00ffe0;
+      background: #79c0ff;
+      box-shadow: 0 0 35px #79c0ff;
+    }
+
+    .container {
+      background: #161b22;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #58a6ff;
+      animation: containerGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes containerGlow {
+      from {
+        box-shadow: 0 0 25px #58a6ff;
+      }
+
+      to {
+        box-shadow: 0 0 40px #79c0ff;
+      }
+    }
+
+    .form-control {
+      background: #010409;
+      border: 1px solid #58a6ff;
+      color: #58a6ff;
+      box-shadow: 0 0 10px #58a6ff inset;
+    }
+
+    .chart-container {
+      background: #010409;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #58a6ff;
+      margin-top: 20px;
+      animation: chartGlow 2s infinite alternate;
+    }
+
+    @keyframes chartGlow {
+      from {
+        box-shadow: 0 0 20px #58a6ff;
+      }
+
+      to {
+        box-shadow: 0 0 30px #79c0ff;
+      }
     }
   </style>
 </head>
@@ -96,13 +151,13 @@
 <body>
   <nav class="navbar">
     <a href="#">Home</a>
-    <a href="#">About</a>
+    <a href="/login">Login / Register</a>
     <a href="/tool">Use the Tool</a>
   </nav>
 
   <div class="main-content">
     <h1>Stock Trend Prediction</h1>
-    <p>Predict trends with precision and accuracy.</p>
+    <p>Predict trends with precision and futuristic insights.</p>
     <a href="/tool" class="btn btn-primary">Get Started</a>
   </div>
 </body>

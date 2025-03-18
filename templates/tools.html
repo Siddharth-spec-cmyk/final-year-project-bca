@@ -9,8 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            color: #e0e0e0;
+            background: radial-gradient(circle, #0d1117 0%, #161b22 100%);
+            color: #58a6ff;
             font-family: "Orbitron", sans-serif;
             height: 100vh;
             margin: 0;
@@ -19,97 +19,88 @@
             align-items: center;
             justify-content: flex-start;
             overflow-y: auto;
-            animation: bgAnimation 15s ease infinite alternate;
+            animation: glowBackground 10s linear infinite alternate;
         }
 
-        @keyframes bgAnimation {
+        @keyframes glowBackground {
             0% {
-                background-position: 0% 50%;
+                background: radial-gradient(circle, #0d1117 0%, #161b22 100%);
             }
 
             100% {
-                background-position: 100% 50%;
+                background: radial-gradient(circle, #161b22 0%, #0d1117 100%);
             }
         }
 
         .navbar {
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 20px #00adb5;
+            background: rgba(3, 13, 23, 0.95);
+            box-shadow: 0 0 15px #58a6ff;
             width: 100%;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 999;
-            padding: 10px 0;
+            padding: 15px 0;
         }
 
         .navbar a {
-            color: #00adb5;
+            color: #58a6ff;
             text-decoration: none;
             font-weight: bold;
-            margin: 0 15px;
-            transition: 0.3s;
+            margin: 0 20px;
+            transition: 0.3s ease-in-out;
         }
 
         .navbar a:hover {
-            color: #00ffe0;
+            color: #79c0ff;
+            text-shadow: 0 0 10px #79c0ff;
         }
 
         .container {
-            max-width: 1200px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
+            background: #161b22;
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 15px #00adb5;
-            animation: fadeIn 1s ease-out;
+            box-shadow: 0 0 25px #58a6ff;
+            animation: containerGlow 3s ease-in-out infinite alternate;
             margin-top: 80px;
-            margin-bottom: 30px;
         }
 
-        @keyframes fadeIn {
+        @keyframes containerGlow {
             from {
-                opacity: 0;
-                transform: translateY(-30px);
+                box-shadow: 0 0 25px #58a6ff;
             }
 
             to {
-                opacity: 1;
-                transform: translateY(0);
+                box-shadow: 0 0 40px #79c0ff;
             }
         }
 
         .form-control {
-            background: #222;
-            border: 1px solid #00adb5;
-            color: #00adb5;
+            background: #010409;
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+            box-shadow: 0 0 10px #58a6ff inset;
         }
 
         .btn-primary {
-            background: #00adb5;
+            background: #58a6ff;
             border: none;
-            color: #000;
+            color: #0d1117;
             font-weight: bold;
             text-transform: uppercase;
-            box-shadow: 0 0 15px #00adb5;
+            box-shadow: 0 0 20px #58a6ff;
             transition: 0.3s;
         }
 
         .btn-primary:hover {
-            background: #00ffe0;
-            box-shadow: 0 0 25px #00ffe0;
+            background: #79c0ff;
+            box-shadow: 0 0 35px #79c0ff;
         }
 
         .chart-container {
-            background: #111;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #00adb5;
-            margin-top: 30px;
-        }
-
-        .chart-container img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #00adb5;
+            background: #010409;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #58a6ff;
+            margin-top: 20px;
         }
 
         .chart-row {
@@ -122,10 +113,10 @@
         }
 
         .table-responsive {
-            background: #111;
+            background: #010409;
             padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 0 15px #00adb5;
+            box-shadow: 0 0 15px #58a6ff;
             margin-top: 30px;
             max-height: 500px;
             overflow-y: auto;
